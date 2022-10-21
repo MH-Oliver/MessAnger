@@ -37,9 +37,10 @@ public class EchoClient extends Client {
             System.out.println("Nachricht vom Server: " + lSplittedMessage[1] + ": " + lSplittedMessage[3]);
         }
         else if (lSplittedMessage[0].equals("ErfolgreichHerrgestellt")) {
+            //System.out.println("Verbindung Herrgestellt");
             SignInViewController.mLoginSucessful = true;
         }
-        else System.out.println(pMessage);
+        System.out.println(pMessage);
     }
 
     public void uebertrageAufGui(String pContent) {

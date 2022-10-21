@@ -25,7 +25,7 @@ public class SignInViewController {
     public static boolean mLoginSucessful;
     @FXML
     public void initialize() {
-        mLoginSucessful = true;
+        mLoginSucessful = false;
         BackButton.setOnMouseClicked(ev -> {
             try {
                 MessengerGui.openContactView();
@@ -40,13 +40,15 @@ public class SignInViewController {
             long lCurrentTime = System.currentTimeMillis();
             while (System.currentTimeMillis() < lCurrentTime+5000) {
                 if (mLoginSucessful) {
+                    mLoginSucessful = false;
+                    System.out.println("Login:" +  lID);
                     MessengerGui.mCurrentLoggedUserID = lID;
                     try {
                         MessengerGui.openContactView();
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
-                    mLoginSucessful = false;
+
                     break;
                 }
             }
