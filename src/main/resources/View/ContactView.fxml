@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ContactViewController">
+   <children>
+      <VBox fx:id="mVBox" layoutX="25.0" layoutY="49.0" prefHeight="411.0" prefWidth="450.0" />
+      <Rectangle fx:id="SearchButton" fill="WHITE" height="73.0" layoutX="248.0" layoutY="477.0" stroke="WHITE" strokeType="INSIDE" width="248.0" />
+      <Rectangle fx:id="LogInButton" fill="WHITE" height="73.0" layoutY="477.0" stroke="WHITE" strokeType="INSIDE" width="248.0" />
+      <Text layoutX="322.0" layoutY="523.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search" wrappingWidth="74.162109375">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
+      <Text layoutX="72.0" layoutY="523.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Log In" wrappingWidth="85.162109375">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="UserText" layoutX="70.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CurrentUser" wrappingWidth="355.89453125">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

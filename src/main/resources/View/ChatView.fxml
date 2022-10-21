@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="550.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ChatViewController">
+   <children>
+      <Rectangle fx:id="BackButton" arcHeight="50.0" arcWidth="50.0" fill="DODGERBLUE" height="46.0" layoutX="14.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="109.0" />
+      <Text layoutX="57.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Back" />
+      <Text fx:id="ContactField" layoutX="49.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact">
+         <font>
+            <Font name="System Bold Italic" size="25.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="WriteField" layoutX="37.0" layoutY="510.0" prefHeight="46.0" prefWidth="389.0" />
+      <Button fx:id="SendButton" layoutX="436.0" layoutY="521.0" mnemonicParsing="false" text="Send" />
+      <ScrollPane layoutX="26.0" layoutY="115.0" prefHeight="384.0" prefWidth="449.0">
+         <content>
+            <VBox fx:id="MessageField" prefHeight="335.0" prefWidth="422.0" />
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>
