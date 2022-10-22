@@ -5,6 +5,8 @@ To do this I used the Classes i got from the German Ministry of Education for In
 My Messenger is serializing all Information with a database. To communicate i used a kind of my own phone number system, where every number is individual and every account gets one of these numbers. 
 (Database of the Server:ServerDB.db 
  Database of the Client:ClientDB.db)
+ 
+ --> Also always download the newest Version of my Project, it mostly contains Bug Fixes and new Features
 
 ## How To use the MessAnger with the Console
 Open ServerMain.java and start the Main Method, to run the Server on your Computer (I'm currently working on a permanently running Server).
