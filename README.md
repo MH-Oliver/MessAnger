@@ -45,5 +45,6 @@ Message(Content,Time,*ID*,SenderID,RecieverID)
 ## How To use the MessAnger GUI
 I also startet building a GUI with JavaFX, which you can start by starting the Main-Method
 in MessengerGui.java. In this you should be able to write with your Friends without knwoing about the Console Commands.
-**(Still in work)**
+**--> You also have to start the Server first, before you start the GUI**
+***(Still in work)***
 
