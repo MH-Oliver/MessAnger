@@ -5,6 +5,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -32,6 +33,9 @@ public class ChatViewController {
 
     @FXML
     Button SendButton;
+
+    @FXML
+    ScrollPane ChatScroll;
 
     String latestMessageTime = "0";
 
@@ -63,6 +67,7 @@ public class ChatViewController {
         SendButton.setOnMouseClicked(ev -> {
             MessengerGui.mEchoClient.send("SendeAnNachricht:" + MessengerGui.mCurrentContactID + ":"+WriteField.getText());
         });
+
 
         Timeline t1 = new Timeline();
         KeyFrame keyframe =

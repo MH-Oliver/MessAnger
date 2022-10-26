@@ -6,6 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 
 public class MessengerGui extends Application {
     static EchoClient mEchoClient = new EchoClient("localhost",1);;
@@ -25,6 +27,9 @@ public class MessengerGui extends Application {
 
     public static ChatViewController mChatViewController;
 
+    static Scene mAddContactView;
+
+    public static AddContactViewController mAddContactViewController;
     static Scene mContactView;
     static Scene mChatView;
 
@@ -69,6 +74,15 @@ public class MessengerGui extends Application {
         mSignInViewController = loader.getController();
         mSignInView = new Scene(loader.load());
         mStage.setScene(mSignInView);
+        mStage.show();
+    }
+
+    public static void openAddContactView() throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MessengerGui.class.getResource("AddContactView.fxml"));
+        mAddContactViewController = loader.getController();
+        mAddContactView = new Scene(loader.load());
+        mStage.setScene(mAddContactView);
         mStage.show();
     }
 

@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
 import java.util.Random;
 
 public class ContactViewController {
@@ -16,6 +17,9 @@ public class ContactViewController {
 
     @FXML
     Rectangle LogInButton;
+
+    @FXML
+    Rectangle AddContactButton;
 
     @FXML
     Text UserText;
@@ -95,6 +99,14 @@ public class ContactViewController {
             try {
                 MessengerGui.openLogInView();
             } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        AddContactButton.setOnMouseClicked(ev -> {
+            try {
+                MessengerGui.openAddContactView();
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });
