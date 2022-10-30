@@ -87,12 +87,11 @@ public class EchoServer extends Server {
         }
         else if (lSplittedMessage[0].equals("NewUser")) {
             int NewID = getNewIdOf("User");
-            connector.executeStatement("Insert into User values ('"+lSplittedMessage[1]+"' , '"
+            connector.executeStatement("Insert into User(Name,Password,IP,Port) values ('"+lSplittedMessage[1]+"' , '"
                                                                                 + lSplittedMessage[2]+ "' , '"
                                                                                 + pClientIP +"' , '"
-                                                                                + NewID + "' , '"
                                                                                 + pClientPort + "')");
-            send(pClientIP,pClientPort,"Sucessfull:Createt:"+ lSplittedMessage[1]+":"+NewID);
+            send(pClientIP,pClientPort,"SucessfullCreatet:"+ lSplittedMessage[1]+":"+NewID);
         }
 
         else {

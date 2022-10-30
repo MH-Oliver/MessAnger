@@ -3,6 +3,7 @@ package Client;
 
 import DataStructure.DatabaseConnector;
 import View.MessengerGui;
+import View.RegisterViewController;
 import View.SignInViewController;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -39,6 +40,10 @@ public class EchoClient extends Client {
         else if (lSplittedMessage[0].equals("ErfolgreichHerrgestellt")) {
             //System.out.println("Verbindung Herrgestellt");
             SignInViewController.mLoginSucessful = true;
+        }
+
+        else if (lSplittedMessage[0].equals("SucessfullCreatet")) {
+            RegisterViewController.mUserID = lSplittedMessage[2];
         }
         System.out.println(pMessage);
     }

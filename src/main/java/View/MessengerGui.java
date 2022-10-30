@@ -30,6 +30,10 @@ public class MessengerGui extends Application {
     static Scene mAddContactView;
 
     public static AddContactViewController mAddContactViewController;
+
+    public static RegisterViewController mRegisterViewController;
+
+    static Scene mRegisterView;
     static Scene mContactView;
     static Scene mChatView;
 
@@ -83,6 +87,15 @@ public class MessengerGui extends Application {
         mAddContactViewController = loader.getController();
         mAddContactView = new Scene(loader.load());
         mStage.setScene(mAddContactView);
+        mStage.show();
+    }
+
+    public static void openRegisterView() throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MessengerGui.class.getResource("RegisterView.fxml"));
+        mRegisterViewController = loader.getController();
+        mRegisterView = new Scene(loader.load());
+        mStage.setScene(mRegisterView);
         mStage.show();
     }
 

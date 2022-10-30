@@ -5,6 +5,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
+
 public class SignInViewController {
 
     @FXML
@@ -22,6 +24,9 @@ public class SignInViewController {
     @FXML
     Text StatusText;
 
+    @FXML
+    Rectangle RegisterButton;
+
     public static boolean mLoginSucessful;
     @FXML
     public void initialize() {
@@ -37,8 +42,7 @@ public class SignInViewController {
             StatusText.setText("Wait a second...");
             String lID = PhoneNumberArea.getText();
             MessengerGui.mEchoClient.send("ANMELDUNG:"+PhoneNumberArea.getText()+":"+PasswordArea.getText());
-            long lCurrentTime = System.currentTimeMillis();
-            while (System.currentTimeMillis() < lCurrentTime+5000) {
+
                 if (mLoginSucessful) {
                     mLoginSucessful = false;
                     System.out.println("Login:" +  lID);
@@ -49,10 +53,25 @@ public class SignInViewController {
                         throw new RuntimeException(e);
                     }
 
-                    break;
+
                 }
+                else {
+                    StatusText.setText("User not found, please try again");
+                }
+
+
+        });
+
+        RegisterButton.setOnMouseClicked(ev -> {
+            try {
+                MessengerGui.openRegisterView();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-            StatusText.setText("User not found, please try again");
         });
     }
+
+
+
+
 }
