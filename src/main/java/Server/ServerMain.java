@@ -1,10 +1,10 @@
 package Server;
 
 public class ServerMain {
-    EchoServer mServer;
+    MessengerServer mServer;
 
     public ServerMain () {
-        mServer = new EchoServer(1);
+        mServer = new MessengerServer(1);
 
 
     }

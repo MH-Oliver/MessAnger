@@ -1,6 +1,6 @@
 package View;
 
-import Client.EchoClient;
+import Client.MessengerClient;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
@@ -10,7 +10,7 @@ import java.io.IOException;
 
 
 public class MessengerGui extends Application {
-    static EchoClient mEchoClient = new EchoClient("localhost",1);;
+    static MessengerClient mEchoClient = new MessengerClient("localhost",1);;
     public static String mCurrentContactID;
 
     public static ChatViewController getmChatViewController() {

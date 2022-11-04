@@ -11,10 +11,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
-public class EchoClient extends Client {
+public class MessengerClient extends Client {
     public DatabaseConnector mConnector = new DatabaseConnector("", 0, "src/main/resources/Client/ClientDB.db", "", "");
     public String mCurrentUserID;
-    public EchoClient(String pServerIP, int pServerPort) {
+    public MessengerClient(String pServerIP, int pServerPort) {
         super(pServerIP, pServerPort);
 
     }

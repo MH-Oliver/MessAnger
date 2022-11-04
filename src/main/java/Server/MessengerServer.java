@@ -2,11 +2,11 @@ package Server;
 
 import DataStructure.*;
 
-public class EchoServer extends Server {
+public class MessengerServer extends Server {
     //List<Useraccount> mUserlist;
     public DatabaseConnector connector;
     String mLetzerNutzer;
-    public EchoServer(int pPort) {
+    public MessengerServer(int pPort) {
         super(pPort);
         connector = new DatabaseConnector("", 0, "src/main/resources/Server/ServerDB.db", "", "");
         System.out.println("Fehler:"+connector.getErrorMessage());

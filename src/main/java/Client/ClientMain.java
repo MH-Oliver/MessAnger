@@ -3,14 +3,13 @@ package Client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import View.*;
 
 public class ClientMain {
-    EchoClient mClient;
+    MessengerClient mClient;
     //public static DataStructure.DatabaseConnector connector = new DataStructure.DatabaseConnector("", 0, "User.db", "", "");
 
     public ClientMain() {
-        mClient = new EchoClient("localhost",1);
+        mClient = new MessengerClient("localhost",1);
     }
 
     public static void main(String[] args) throws IOException {
