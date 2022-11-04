@@ -25,7 +25,7 @@ public class EchoServer extends Server {
         System.out.println("Nachricht von Client: "+pMessage);
         //System.out.println(connector.getErrorMessage());
 
-        connector.executeStatement("Select Name from User where IP = '" + pClientIP + "' and Port = '" + pClientPort + "'");
+
         //if (connector.getCurrentQueryResult().getData()[0][0] != null) mLetzerNutzer = connector.getCurrentQueryResult().getData()[0][0] + ":" + pClientIP + ":" + pClientPort;
 
 
@@ -44,7 +44,7 @@ public class EchoServer extends Server {
                     connector.executeStatement("Update User set IP ='"+pClientIP+"' , Port = '" + pClientPort +"' where ID = '"+ lSplittedMessage[1]+"' and Password = '" + lSplittedMessage[2] + "'" );
                     mLetzerNutzer = lSplittedMessage[1]+":"+pClientIP+":"+pClientPort ;
                     connector.executeStatement("Select Name from User where ID = " + lSplittedMessage[1]);
-                    send(pClientIP,pClientPort,"ErfolgreichHerrgestellt: "+connector.getCurrentQueryResult().getData()[0][0]);
+                    send(pClientIP,pClientPort,"ErfolgreichHerrgestellt:" + lSplittedMessage[1] + ": " +connector.getCurrentQueryResult().getData()[0][0]);
                     
                 }
             }
@@ -52,51 +52,73 @@ public class EchoServer extends Server {
 
         }
 
-        else if (lSplittedMessage[0].equals("SendeAnNachricht")) {
-            if (mLetzerNutzer != null) {
-                boolean lUserfound = false;
-                for (int i = 0; i < lUserDatabase.length; i++) {
-                    if (lSplittedMessage[1].equals(lUserDatabase[i][3])) {
-                        String [] mLetzterUserSplit = mLetzerNutzer.split(":");
-                        int lNewID = getNewIdOf("Message");
-                        connector.executeStatement("Insert into Message values ('" + lSplittedMessage[2] + "' , " + System.currentTimeMillis() + " , "
-                                + lNewID + " , '" + lSplittedMessage[1] + "','"+mLetzterUserSplit[0]+"')");
-                        System.out.println("Fehler:"+connector.getErrorMessage());
-                        System.out.println("Nachricht in Datenbank abgespeichert");
-                        long lCurrentTime = System.currentTimeMillis();
-                        send(lUserDatabase[i][2], Integer.parseInt(lUserDatabase[i][4]), "Nachricht:" + lSplittedMessage[2] + ":" + lCurrentTime + ":"+ mLetzterUserSplit[0] + ":" + lNewID + ":" + lSplittedMessage[1]);
-                        send(pClientIP,pClientPort,"Nachricht:" + lSplittedMessage[2] + ":" + lCurrentTime + ":"+ mLetzterUserSplit[0] + ":" + lNewID + ":" + lSplittedMessage[1]);
-                        send(pClientIP, pClientPort, "NachrichtVersendetAn: " + lUserDatabase[i][0]);
-                        lUserfound = true;
+        else {
+            connector.executeStatement("Select ID from User where IP = '" + pClientIP + "' and Port = '" + pClientPort + "'");
 
+
+            if (connector.getCurrentQueryResult().getData()!= null) { //Nutzer muss angemeldet sein
+
+                mLetzerNutzer = connector.getCurrentQueryResult().getData()[0][0] + ":" + pClientIP + ":" + pClientPort;
+                String [] lLetzterUserSplit = mLetzerNutzer.split(":");
+                if (lSplittedMessage[0].equals("SendeAnNachricht")) {
+                    if (mLetzerNutzer != null) {
+                        boolean lUserfound = false;
+                        for (int i = 0; i < lUserDatabase.length; i++) {
+                            if (lSplittedMessage[1].equals(lUserDatabase[i][3])) {
+                                int lNewID = getNewIdOf("Message");
+                                connector.executeStatement("Insert into Message values ('" + lSplittedMessage[2] + "' , " + System.currentTimeMillis() + " , "
+                                        + lNewID + " , '" + lSplittedMessage[1] + "','"+lLetzterUserSplit[0]+"')");
+                                System.out.println("Fehler:"+connector.getErrorMessage());
+                                System.out.println("Nachricht in Datenbank abgespeichert");
+                                long lCurrentTime = System.currentTimeMillis();
+                                //send(lUserDatabase[i][2], Integer.parseInt(lUserDatabase[i][4]), "Nachricht:" + lSplittedMessage[2] + ":" + lCurrentTime + ":"+ lLetzterUserSplit[0] + ":" + lNewID + ":" + lSplittedMessage[1]);
+                                send(pClientIP,pClientPort,"Nachricht:" + lSplittedMessage[2] + ":" + lCurrentTime + ":"+ lLetzterUserSplit[0] + ":" + lNewID + ":" + lSplittedMessage[1]);
+                                send(pClientIP, pClientPort, "NachrichtVersendetAn: " + lUserDatabase[i][0]);
+                                lUserfound = true;
+
+                            }
+                        }
+                        if (!lUserfound) send(pClientIP, pClientPort, "ID:" + lSplittedMessage[1] + ":NichtGefunden");
                     }
                 }
-                if (!lUserfound) send(pClientIP, pClientPort, "ID:" + lSplittedMessage[1] + ":NichtGefunden");
+                else if (lSplittedMessage[0].equals("Received")){
+                    connector.executeStatement("Delete from Message where ID = "+lSplittedMessage[1]);
+                }
+                else if (lSplittedMessage[0].equals("GetMessages")) {
+                    connector.executeStatement("Select * from Message where ReceiverID = "+lLetzterUserSplit[0]);
+                    String [][] lResultArray = connector.getCurrentQueryResult().getData();
+                    for (int i = 0; i< lResultArray.length;i++) {
+                        System.out.println(lResultArray[i][0]);
+                        send(pClientIP,pClientPort,"Nachricht:"+lResultArray[i][0]+":"+lResultArray[i][1]+":"+lResultArray[i][4]+":"+lResultArray[i][2]  + ":" + lResultArray[i][3]);
+                    }
+                    send(pClientIP,pClientPort,"AlleNachrichtenVersendet");
+                }
+                else if (lSplittedMessage[0].equals("NewUser")) {
+                    int NewID = getNewIdOf("User");
+                    connector.executeStatement("Insert into User(Name,Password,IP,Port) values ('"+lSplittedMessage[1]+"' , '"
+                            + lSplittedMessage[2]+ "' , '"
+                            + pClientIP +"' , '"
+                            + pClientPort + "')");
+                    send(pClientIP,pClientPort,"SucessfullCreatet:"+ lSplittedMessage[1]+":"+NewID);
+                }
+
+                else if (lSplittedMessage[0].equals("ABMELDUNG")) {
+                    System.out.println("Abmeldevorgang Datenbank");
+                    connector.executeStatement("Update User set IP = null, Port = null where ID = " + lLetzterUserSplit[0]);
+                    send(pClientIP,pClientPort,"ErfolgreichAbgemeldet");
+                }
+
+                else {
+                    send(pClientIP,pClientPort,"Error please try again");
+                }
             }
-        }
-        else if (lSplittedMessage[0].equals("Received")){
-            connector.executeStatement("Delete from Message where ID = "+lSplittedMessage[1]);
-        }
-        else if (lSplittedMessage[0].equals("GetMessages")) {
-            connector.executeStatement("Select * from Message where ReceiverID = "+lSplittedMessage[1]);
-            String [][] lResultArray = connector.getCurrentQueryResult().getData();
-            for (int i = 0; i< lResultArray.length;i++) {
-                System.out.println(lResultArray[i][0]);
-                send(pClientIP,pClientPort,"Nachricht:"+lResultArray[i][0]+":"+lResultArray[i][1]+":"+lResultArray[i][4]+":"+lResultArray[i][2]  + ":" + lResultArray[i][3]);
+            else {
+                send(pClientIP,pClientPort,"LoginExpected");
             }
-        }
-        else if (lSplittedMessage[0].equals("NewUser")) {
-            int NewID = getNewIdOf("User");
-            connector.executeStatement("Insert into User(Name,Password,IP,Port) values ('"+lSplittedMessage[1]+"' , '"
-                                                                                + lSplittedMessage[2]+ "' , '"
-                                                                                + pClientIP +"' , '"
-                                                                                + pClientPort + "')");
-            send(pClientIP,pClientPort,"SucessfullCreatet:"+ lSplittedMessage[1]+":"+NewID);
         }
 
-        else {
-            send(pClientIP,pClientPort,"Error please try again");
-        }
+
+
 
     }
 
@@ -109,6 +131,14 @@ public class EchoServer extends Server {
 
     @Override
     public void processClosingConnection(String pClientIP, int pClientPort) {
+        connector.executeStatement("Select ID from User where IP = '" + pClientIP + "' and Port = '" + pClientPort + "'");
+        mLetzerNutzer = connector.getCurrentQueryResult().getData()[0][0] + ":" + pClientIP + ":" + pClientPort;
+        String [] lLetzterUserSplit = mLetzerNutzer.split(":");
+
+        System.out.println("Abmeldevorgang Datenbank");
+        connector.executeStatement("Update User set IP = null, Port = null where ID = " + lLetzterUserSplit[0]);
+        send(pClientIP,pClientPort,"ErfolgreichAbgemeldet");
+
 
     }
 }

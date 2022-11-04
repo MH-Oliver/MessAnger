@@ -27,10 +27,12 @@ public class ContactViewController {
     //public Rectangle test01;
 
     @FXML
-    public void initialize() {
-        MessengerGui.mEchoClient.mConnector.executeStatement("Select Name from User where ID = " + MessengerGui.mCurrentLoggedUserID);
-        if (MessengerGui.mEchoClient.mConnector.getCurrentQueryResult() != null) UserText.setText(MessengerGui.mEchoClient.mConnector.getCurrentQueryResult().getData()[0][0]);
+    public void initialize() throws Exception {
 
+        MessengerGui.mEchoClient.mConnector.executeStatement("Select Name from User where ID = " + MessengerGui.mCurrentLoggedUserID);
+        //System.out.println("Login: " + MessengerGui.mEchoClient.mConnector.getCurrentQueryResult().getData());
+        if (MessengerGui.mEchoClient.mConnector.getCurrentQueryResult().getData().length != 0) UserText.setText(MessengerGui.mEchoClient.mConnector.getCurrentQueryResult().getData()[0][0]);
+        //else MessengerGui.mEchoClient.mConnector.executeStatement("Insert into User values (null," + MessengerGui.mCurrentLoggedUserID + ")");
         MessengerGui.mEchoClient.mConnector.executeStatement("Select * from User");
 
 
@@ -41,6 +43,7 @@ public class ContactViewController {
         int lRoundedLength = lCurrentUserResult.length/3;
         if ((lCurrentUserResult.length/3)%1 <  1 ) lRoundedLength = 1 + Math.round(lCurrentUserResult.length/3);
         //System.out.println("lRoundedLength: "+lRoundedLength);
+
         for (int i = 0; i < lRoundedLength; i++) {
             //System.out.println(i);
             HBox lHBox = new HBox();
@@ -79,6 +82,7 @@ public class ContactViewController {
                 lPane.getChildren().add(lRectangle);
                 Text lText = new Text(lRectangle.getX()+lRectangle.getWidth()/2,lRectangle.getY()+lRectangle.getHeight()/2,lCurrentUserResult[i*3 + n][0]);
                 lText.setX(lText.getX()-lCurrentUserResult[i*3 + n][0].toCharArray().length*4);
+                lText.setDisable(true);
                 lPane.getChildren().add(lText);
 
 
@@ -96,6 +100,7 @@ public class ContactViewController {
         }
 
         LogInButton.setOnMouseClicked(ev -> {
+            MessengerGui.mEchoClient.send("ABMELDUNG");
             try {
                 MessengerGui.openLogInView();
             } catch (Exception e) {

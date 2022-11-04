@@ -41,17 +41,13 @@ public class MessengerGui extends Application {
     static Stage mStage;
     @Override
     public void start(Stage stage) throws Exception {
-        mCurrentLoggedUserID = "1";
+        mCurrentLoggedUserID = "0";
 
 
         mStage = stage;
-
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MessengerGui.class.getResource("ContactView.fxml"));
         mStage.setTitle("Messenger");
-        mContactView = new Scene(loader.load());
-        mStage.setScene(mContactView);
-        mStage.show();
+        openLogInView();
+
     }
 
     public static void openChatView(String pUserID) throws Exception {
@@ -102,7 +98,10 @@ public class MessengerGui extends Application {
 
     public static void main(String[] args) {
         launch(args);
+        mEchoClient.close();
+        System.out.println("Fertig");
     }
+
 }
 
 

@@ -13,6 +13,7 @@ import javafx.scene.text.Text;
 
 public class EchoClient extends Client {
     public DatabaseConnector mConnector = new DatabaseConnector("", 0, "src/main/resources/Client/ClientDB.db", "", "");
+    public String mCurrentUserID;
     public EchoClient(String pServerIP, int pServerPort) {
         super(pServerIP, pServerPort);
 
@@ -23,7 +24,7 @@ public class EchoClient extends Client {
 
         //uebertrageAufGui(lSplittedMessage[1]);
         if (lSplittedMessage[0].equals("Nachricht")) {
-            send("Received:"+lSplittedMessage[4]);
+            if (lSplittedMessage[5].equals(mCurrentUserID))  send("Received:"+lSplittedMessage[4]);
             //Überprüfen ob Sender bereits in Datenbank gespeichert
             mConnector.executeStatement("Select Name from User where ID = '" + lSplittedMessage[3] + "'");
             System.out.println("ID: " + lSplittedMessage[3]);
@@ -39,6 +40,7 @@ public class EchoClient extends Client {
         }
         else if (lSplittedMessage[0].equals("ErfolgreichHerrgestellt")) {
             //System.out.println("Verbindung Herrgestellt");
+            mCurrentUserID = lSplittedMessage[1];
             SignInViewController.mLoginSucessful = true;
         }
 

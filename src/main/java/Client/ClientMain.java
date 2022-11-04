@@ -19,11 +19,12 @@ public class ClientMain {
         //lSoftware.mClient.send("ANMELDUNG:ElonMusk:123");
         //lSoftware.mClient.send("SendeAnNachricht:PokemanGu:MoinServusMoin");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        String input;
-        while (true) {
+        String input = "";
+        while (!input.equals("Close")) {
             input = in.readLine();
             if (!input.equals(null)) lSoftware.mClient.send(input);
         }
+        lSoftware.mClient.close();
         //lSoftware.connector.executeStatement("SELECT * FROM User");
         //System.out.println(lSoftware.connector.getCurrentQueryResult().getData()[0][0]);
 
