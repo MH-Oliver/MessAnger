@@ -20,34 +20,37 @@ public class MessengerClient extends Client {
     }
     @Override
     public void processMessage(String pMessage) {
+        System.out.println("Recieved Information: " +pMessage);
         String[] lSplittedMessage = pMessage.split(":");
 
         //uebertrageAufGui(lSplittedMessage[1]);
         if (lSplittedMessage[0].equals("Nachricht")) {
+            System.out.print("Message by ");
             if (lSplittedMessage[5].equals(mCurrentUserID))  send("Received:"+lSplittedMessage[4]);
             //Überprüfen ob Sender bereits in Datenbank gespeichert
             mConnector.executeStatement("Select Name from User where ID = '" + lSplittedMessage[3] + "'");
-            System.out.println("ID: " + lSplittedMessage[3]);
-            if (mConnector.getCurrentQueryResult() == null) {
+            System.out.println(lSplittedMessage[3] + ", to " + lSplittedMessage[5]);
+            System.out.println("Content: " + lSplittedMessage[1]);
+            if (mConnector.getCurrentQueryResult().getData().length == 0) {
                 mConnector.executeStatement("Insert into User values ('"+lSplittedMessage[3]+"' , '" + lSplittedMessage[3] +"')");
             }
             mConnector.executeStatement("Select MAX(ID) from Message");
             int lNewID = 1;
             if (mConnector.getCurrentQueryResult().getData()[0][0] != null) lNewID = Integer.parseInt(mConnector.getCurrentQueryResult().getData()[0][0]) + 1;
+            System.out.println("--> Message saved");
             mConnector.executeStatement("Insert into Message values ('" + lSplittedMessage[1] + "' , '" + lSplittedMessage[2] +  "' , '" + lNewID + "' , ' " + lSplittedMessage[3] +  "' , ' " + lSplittedMessage[5] + "')");
 
-            System.out.println("Nachricht vom Server: " + lSplittedMessage[1] + ": " + lSplittedMessage[3]);
         }
         else if (lSplittedMessage[0].equals("ErfolgreichHerrgestellt")) {
-            //System.out.println("Verbindung Herrgestellt");
+            System.out.println("Successfully registered to " + lSplittedMessage[1]);
             mCurrentUserID = lSplittedMessage[1];
             SignInViewController.mLoginSucessful = true;
         }
 
         else if (lSplittedMessage[0].equals("SucessfullCreatet")) {
+            System.out.println("Successfully created account " + lSplittedMessage[2] +  " of " + lSplittedMessage[1]);
             RegisterViewController.mUserID = lSplittedMessage[2];
         }
-        System.out.println(pMessage);
     }
 
     public void uebertrageAufGui(String pContent) {

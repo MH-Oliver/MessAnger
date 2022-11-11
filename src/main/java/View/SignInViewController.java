@@ -1,5 +1,6 @@
 package View;
 
+import DataStructure.DatabaseConnector;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.shape.Rectangle;
@@ -20,6 +21,9 @@ public class SignInViewController {
 
     @FXML
     TextArea PasswordArea;
+
+    @FXML
+    TextArea NameArea;
 
     @FXML
     Text StatusText;
@@ -50,6 +54,11 @@ public class SignInViewController {
                     mLoginSucessful = false;
                     System.out.println("Login:" +  lID);
                     MessengerGui.mCurrentLoggedUserID = lID;
+
+                    DatabaseConnector lConnector = MessengerGui.mEchoClient.mConnector;
+                    lConnector.executeStatement("Select Name from User where ID = " + lID);
+                    if (lConnector.getCurrentQueryResult().getData().length == 0) lConnector.executeStatement("Insert into User values ('" + NameArea.getText() + "'," + lID + ")");
+                    else lConnector.executeStatement("Update User set Name ='" + NameArea.getText() + "' where ID = " + lID);
                     try {
                         MessengerGui.openContactView();
                     } catch (Exception e) {

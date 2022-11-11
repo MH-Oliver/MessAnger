@@ -15,14 +15,25 @@ public class ClientMain {
     public static void main(String[] args) throws IOException {
         ClientMain lSoftware  = new ClientMain();
 
-        //lSoftware.mClient.send("ANMELDUNG:ElonMusk:123");
-        //lSoftware.mClient.send("SendeAnNachricht:PokemanGu:MoinServusMoin");
+        System.out.println("         Welcome to the MessAnger Console");
+        System.out.println("To USE the MessAnger you have the following commands:");
+        System.out.println("ANMELDUNG:<Your Phone Number>:<Your Password>  ");
+        System.out.println("SendeAnNachricht:<Contact Phone Number>:<Message>");
+        System.out.println("GetMessages");
+        System.out.println("NewUser:<Any Name>:<Any Password>");
+        System.out.println("ABMELDUNG");
+        System.out.println("----------------------------------------------------");
+        System.out.println("Now you can type in your commands: ");
+        System.out.println();
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         String input = "";
         while (!input.equals("Close")) {
             input = in.readLine();
-            if (!input.equals(null)) lSoftware.mClient.send(input);
+            if (!input.equals(null)) {
+                lSoftware.mClient.send(input);
+            }
         }
+        lSoftware.mClient.send("ABMELDUNG");
         lSoftware.mClient.close();
         //lSoftware.connector.executeStatement("SELECT * FROM User");
         //System.out.println(lSoftware.connector.getCurrentQueryResult().getData()[0][0]);

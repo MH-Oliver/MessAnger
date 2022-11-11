@@ -16,17 +16,17 @@
             <Font size="15.0" />
          </font>
       </Text>
-      <Text layoutX="49.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:">
+      <Text layoutX="51.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:">
          <font>
             <Font size="15.0" />
          </font>
       </Text>
-      <TextArea fx:id="PasswordArea" layoutX="131.0" layoutY="219.0" prefHeight="41.0" prefWidth="238.0" />
-      <Rectangle fx:id="SendButton" arcHeight="20.0" arcWidth="20.0" fill="#9eb1c3" height="29.0" layoutX="292.0" layoutY="289.0" stroke="BLACK" strokeType="INSIDE" width="66.0" />
+      <TextArea fx:id="PasswordArea" layoutX="133.0" layoutY="259.0" prefHeight="41.0" prefWidth="238.0" />
+      <Rectangle fx:id="SendButton" arcHeight="20.0" arcWidth="20.0" fill="#9eb1c3" height="29.0" layoutX="294.0" layoutY="320.0" stroke="BLACK" strokeType="INSIDE" width="66.0" />
       <Rectangle fx:id="BackButton" arcHeight="20.0" arcWidth="20.0" fill="#9eb1c3" height="29.0" layoutX="33.0" layoutY="33.0" stroke="BLACK" strokeType="INSIDE" width="66.0" />
       <Text disable="true" layoutX="49.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Back" />
-      <Text disable="true" layoutX="313.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" />
-      <Text fx:id="StatusText" layoutX="171.0" layoutY="353.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ready">
+      <Text disable="true" layoutX="315.0" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" />
+      <Text fx:id="StatusText" layoutX="173.0" layoutY="384.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ready">
          <font>
             <Font name="System Italic" size="15.0" />
          </font>
@@ -41,6 +41,12 @@
       <Text disable="true" layoutX="272.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register">
          <font>
             <Font name="System Italic" size="31.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="NameArea" layoutX="133.0" layoutY="209.0" prefHeight="41.0" prefWidth="238.0" />
+      <Text layoutX="51.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Name:">
+         <font>
+            <Font size="15.0" />
          </font>
       </Text>
    </children>

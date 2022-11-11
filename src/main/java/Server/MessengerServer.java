@@ -51,12 +51,20 @@ public class MessengerServer extends Server {
             if (!lUserfound) send(pClientIP,pClientPort,"VerbindungFehlgeschlagen");
 
         }
+        else if (lSplittedMessage[0].equals("NewUser")) {
+            int NewID = getNewIdOf("User");
+            connector.executeStatement("Insert into User(Name,Password,IP,Port) values ('"+lSplittedMessage[1]+"' , '"
+                    + lSplittedMessage[2]+ "' , '"
+                    + pClientIP +"' , '"
+                    + pClientPort + "')");
+            send(pClientIP,pClientPort,"SucessfullCreatet:"+ lSplittedMessage[1]+":"+NewID);
+        }
 
         else {
             connector.executeStatement("Select ID from User where IP = '" + pClientIP + "' and Port = '" + pClientPort + "'");
 
 
-            if (connector.getCurrentQueryResult().getData()!= null) { //Nutzer muss angemeldet sein
+            if (connector.getCurrentQueryResult().getData().length != 0) { //Nutzer muss angemeldet sein
 
                 mLetzerNutzer = connector.getCurrentQueryResult().getData()[0][0] + ":" + pClientIP + ":" + pClientPort;
                 String [] lLetzterUserSplit = mLetzerNutzer.split(":");
@@ -93,14 +101,7 @@ public class MessengerServer extends Server {
                     }
                     send(pClientIP,pClientPort,"AlleNachrichtenVersendet");
                 }
-                else if (lSplittedMessage[0].equals("NewUser")) {
-                    int NewID = getNewIdOf("User");
-                    connector.executeStatement("Insert into User(Name,Password,IP,Port) values ('"+lSplittedMessage[1]+"' , '"
-                            + lSplittedMessage[2]+ "' , '"
-                            + pClientIP +"' , '"
-                            + pClientPort + "')");
-                    send(pClientIP,pClientPort,"SucessfullCreatet:"+ lSplittedMessage[1]+":"+NewID);
-                }
+
 
                 else if (lSplittedMessage[0].equals("ABMELDUNG")) {
                     System.out.println("Abmeldevorgang Datenbank");
@@ -131,13 +132,13 @@ public class MessengerServer extends Server {
 
     @Override
     public void processClosingConnection(String pClientIP, int pClientPort) {
-        connector.executeStatement("Select ID from User where IP = '" + pClientIP + "' and Port = '" + pClientPort + "'");
+        /*connector.executeStatement("Select ID from User where IP = '" + pClientIP + "' and Port = '" + pClientPort + "'");
         mLetzerNutzer = connector.getCurrentQueryResult().getData()[0][0] + ":" + pClientIP + ":" + pClientPort;
         String [] lLetzterUserSplit = mLetzerNutzer.split(":");
 
         System.out.println("Abmeldevorgang Datenbank");
         connector.executeStatement("Update User set IP = null, Port = null where ID = " + lLetzterUserSplit[0]);
-        send(pClientIP,pClientPort,"ErfolgreichAbgemeldet");
+        send(pClientIP,pClientPort,"ErfolgreichAbgemeldet");*/
 
 
     }

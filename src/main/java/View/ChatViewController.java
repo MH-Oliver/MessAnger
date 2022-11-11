@@ -72,7 +72,7 @@ public class ChatViewController {
         Timeline t1 = new Timeline();
         KeyFrame keyframe =
                 new KeyFrame(Duration.seconds(2), ev -> {
-                    MessengerGui.mEchoClient.send("GetMessages:" + MessengerGui.mCurrentLoggedUserID);
+                    MessengerGui.mEchoClient.send("GetMessages");
 
                     lConnector.executeStatement("Select Name from User where ID = '" + MessengerGui.mCurrentContactID + "'");
 

@@ -98,6 +98,7 @@ public class MessengerGui extends Application {
 
     public static void main(String[] args) {
         launch(args);
+        mEchoClient.send("ABMELDUNG");
         mEchoClient.close();
         System.out.println("Fertig");
     }
